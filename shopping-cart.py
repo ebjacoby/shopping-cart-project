@@ -26,10 +26,18 @@ products = [
 ] # based on data from Instacart: https://www.instacart.com/datasets/grocery-shopping-2017
 
 
-selected_id = input("Please input a product identifier: ") #> "9" (string) 
-matching_products = [p for p in products if str(p["id"]) == str(selected_id)] #needs to match previous data type
-matching_product = matching_products[0]
-print("SELECTED PRODUCT: " + matching_product["name"] + " " + str(matching_product["price"]))
+
+
+
+while True: 
+    selected_id = input("Please input a product identifier: ") #> "9" (string) 
+    #> DONE
+    if selected_id == "DONE":
+        break
+    else:
+        matching_products = [p for p in products if str(p["id"]) == str(selected_id)] #needs to match previous data type
+        matching_product = matching_products[0]
+        print("SELECTED PRODUCT: " + matching_product["name"] + " " + str(matching_product["price"]))
 
 
 
