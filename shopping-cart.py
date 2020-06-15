@@ -46,6 +46,9 @@ sheet = doc.worksheet(SHEET_NAME) #> <class 'gspread.models.Worksheet'>
 
 products = sheet.get_all_records() #> <class 'list'>
 
+id_list = [p["id"] for p in products]
+max_id = max(id_list)
+
 # for row in products:
 #     print(row) #> <class 'dict'>
 
@@ -60,13 +63,16 @@ subtotal_price = 0
 selected_ids = []
 
 while True: 
-    selected_id = input("Please input a product identifier: ") #> "9" (string) 
+    selected_id = input("Please input a unique product identifier (up to " + str(max_id) + ") or enter 'DONE' when finished: ") #> "9" (string) 
     #> DONE
-    if selected_id == "DONE":
+    if selected_id.lower() == "done":
         break
+    elif not selected_id.isnumeric():
+        continue
+    elif int(selected_id) not in id_list:
+        continue
     else:
-        selected_ids.append(selected_id)
-
+        selected_ids.append(selected_id)      
 
 print("---------------------------------")
 print("LUCKY'S FOODS GROCERY")
@@ -79,7 +85,6 @@ current_time = now.strftime("%H:%M:%S")
 full_time = str(current_day) + " " + str(current_time)
 
 print("CHECKOUT AT: ", full_time)
-
 
 print("---------------------------------")
 print("SELECTED PRODUCTS:")
