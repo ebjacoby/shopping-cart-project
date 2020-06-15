@@ -3,6 +3,7 @@ import os
 
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+import datetime
 
 load_dotenv()
 
@@ -69,7 +70,10 @@ print("---------------------------------")
 print("LUCKY'S FOODS GROCERY")
 print("WWW.LUCKYS-FOODS-GROCERY.COM")
 print("---------------------------------")
-# > CHECKOUT AT: 2020-02-07 03:54 PM
+
+current_time = datetime.datetime.now()
+print("CHECKOUT AT: ", str(current_time))
+
 print("---------------------------------")
 print("SELECTED PRODUCTS:")
 
@@ -91,22 +95,6 @@ print("---------------------------------")
 print("THANKS, SEE YOU AGAIN SOON!")
 print("---------------------------------")
 
-# def to_usd(my_price):
-#     """
-#     Converts a numeric value to usd-formatted string, for printing and display purposes.
-
-#     Param: my_price (int or float) like 4000.444444
-
-#     Example: to_usd(4000.444444)
-
-#     Returns: $4,000.44
-#     """
-#     return f"${my_price:,.2f}" #> $12,000.71
-
-# TODO: write some Python code here to produce the desired output
-
-#print(products)
-
 
 # exception>>>>>>>>>>>>>>>
 # while True:
@@ -118,15 +106,3 @@ print("---------------------------------")
 
 # except (RuntimeError, TypeError, NameError):
 #     pass
-
-
-
-
-# import datetime
-
-# today = datetime.date.today()
-# print(str(today)) #> '2017-07-02'
-
-# now = datetime.datetime.now()
-# print(str(now)) #> '2017-07-02 23:43:25.915816'
-# print(now.strftime("%Y-%m-%d")) #> '2017-07-02'
