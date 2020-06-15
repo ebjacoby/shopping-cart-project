@@ -4,10 +4,14 @@ import os
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
+
 load_dotenv()
 
 DOCUMENT_ID = os.environ.get("GOOGLE_SHEET_ID", "OOPS")
 SHEET_NAME = os.environ.get("SHEET_NAME", "products")
+
+TAX = os.environ.get("TAX", "OOPS, please set env var called 'TAX'")
+TAX = float(TAX)
 
 print(DOCUMENT_ID)
 
@@ -38,29 +42,30 @@ print("-----------------")
 
 sheet = doc.worksheet(SHEET_NAME) #> <class 'gspread.models.Worksheet'>
 
-rows = sheet.get_all_records() #> <class 'list'>
-
-for row in rows:
-    print(row) #> <class 'dict'>
-
+products = sheet.get_all_records() #> <class 'list'>
 
 #
 # WRITE VALUES TO SHEET for GOOGLE SHEET API 
 #
 
-next_id = len(rows) + 1 # TODO: should change this to be one greater than the current maximum id value
+#next_id = len(products) + 1 # TODO: should change this to be one greater than the current maximum id value
+next_id = max(p["id"] for p in products) + 1
+product_name = input("Please enter the name of the new product: ")
+aisle_name = input("Please enter the name of the aisle in which " + product_name + " will be placed: ")
+department_name = input("Please enter the name of the department for " + product_name + ": ")
+product_price = float(input("Please enter the price of " + product_name + ": "))
 
 next_object = {
     "id": next_id,
-    "name": f"Product {next_id}",
-    "department": "snacks",
-    "price": 4.99,
-    "availability_date": "2019-01-01"
+    "name": product_name,
+    "aisle": aisle_name,
+    "department": department_name,
+    "price": product_price
 }
 
 next_row = list(next_object.values()) #> [13, 'Product 13', 'snacks', 4.99, '2019-01-01']
 
-next_row_number = len(rows) + 2 # number of records, plus a header row, plus one
+next_row_number = len(products) + 2 # number of records, plus a header row, plus one
 
 response = sheet.insert_row(next_row, next_row_number)
 
@@ -68,8 +73,3 @@ print("-----------------")
 print("NEW RECORD:")
 print(next_row)
 print("-----------------")
-print("RESPONSE:")
-print(type(response)) #> dict
-print(response) #> {'spreadsheetId': '___', 'updatedRange': '___', 'updatedRows': 1, 'updatedColumns': 5, 'updatedCells': 5}
-
-print(next_object)
