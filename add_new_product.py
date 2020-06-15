@@ -58,8 +58,8 @@ product_price = float(input("Please enter the price of " + product_name + ": "))
 next_object = {
     "id": next_id,
     "name": product_name,
-    "aisle": aisle_name,
-    "department": department_name,
+    "aisle": aisle_name.lower(),
+    "department": department_name.lower(),
     "price": product_price
 }
 

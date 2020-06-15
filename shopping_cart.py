@@ -40,6 +40,7 @@ doc = client.open_by_key(DOCUMENT_ID) #> <class 'gspread.models.Spreadsheet'>
 
 print("-----------------")
 print("SPREADSHEET:", doc.title)
+print("If you would like to add a new product, run add_new_product.py")
 print("-----------------")
 
 sheet = doc.worksheet(SHEET_NAME) #> <class 'gspread.models.Worksheet'>
