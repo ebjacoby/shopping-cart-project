@@ -45,7 +45,7 @@ for row in rows:
 
 
 #
-# WRITE VALUES TO SHEET
+# WRITE VALUES TO SHEET for GOOGLE SHEET API 
 #
 
 next_id = len(rows) + 1 # TODO: should change this to be one greater than the current maximum id value

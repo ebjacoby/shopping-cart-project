@@ -1,3 +1,6 @@
 GOOGLE_SHEET_ID.env
+SENDGRID_API_KEY.env
+MY_EMAIL_ADDRESS.env
+SENDGRID_TEMPLATE_ID.env
 
 spreadsheet_credentials.json
