@@ -9,6 +9,9 @@ load_dotenv()
 DOCUMENT_ID = os.environ.get("GOOGLE_SHEET_ID", "OOPS")
 SHEET_NAME = os.environ.get("SHEET_NAME", "products")
 
+TAX = os.environ.get("TAX", "OOPS, please set env var called 'TAX'")
+TAX = float(TAX)
+
 print(DOCUMENT_ID)
 
 #
@@ -50,7 +53,7 @@ print("Hello")
 def to_usd(my_price):
     return f"${my_price:,.2f}" #> $12,000.71
 
-total_price = 0
+subtotal_price = 0
 selected_ids = []
 
 while True: 
@@ -64,9 +67,15 @@ while True:
 for selected_id in selected_ids:
     matching_products = [p for p in products if str(p["id"]) == str(selected_id)] #needs to match previous data type
     matching_product = matching_products[0]  # DO I NEED THIS??!
-    total_price = total_price + matching_product["price"]
+    subtotal_price = subtotal_price + matching_product["price"]
     print("SELECTED PRODUCT: " + matching_product["name"] + " " + str(matching_product["price"]))
-print("TOTAL PRICE: " + str(to_usd(total_price)))
+print("SUBTOTAL: " + str(to_usd(subtotal_price)))
+
+total_tax = TAX * subtotal_price
+total_price = subtotal_price + total_tax
+
+print("TAX: " + str(to_usd(total_tax)))
+print("TOTAL: " + str(to_usd(total_price)))
 
 
 # def to_usd(my_price):
