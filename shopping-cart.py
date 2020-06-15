@@ -64,19 +64,32 @@ while True:
     else:
         selected_ids.append(selected_id)
 
+
+print("---------------------------------")
+print("LUCKY'S FOODS GROCERY")
+print("WWW.LUCKYS-FOODS-GROCERY.COM")
+print("---------------------------------")
+# > CHECKOUT AT: 2020-02-07 03:54 PM
+print("---------------------------------")
+print("SELECTED PRODUCTS:")
+
 for selected_id in selected_ids:
     matching_products = [p for p in products if str(p["id"]) == str(selected_id)] #needs to match previous data type
     matching_product = matching_products[0]  # DO I NEED THIS??!
     subtotal_price = subtotal_price + matching_product["price"]
-    print("SELECTED PRODUCT: " + matching_product["name"] + " " + str(matching_product["price"]))
-print("SUBTOTAL: " + str(to_usd(subtotal_price)))
+    print("... " + matching_product["name"] + "  (" + str(to_usd(matching_product["price"])) + ")")
+
+print("---------------------------------")
 
 total_tax = TAX * subtotal_price
 total_price = subtotal_price + total_tax
 
+print("SUBTOTAL: " + str(to_usd(subtotal_price)))
 print("TAX: " + str(to_usd(total_tax)))
 print("TOTAL: " + str(to_usd(total_price)))
-
+print("---------------------------------")
+print("THANKS, SEE YOU AGAIN SOON!")
+print("---------------------------------")
 
 # def to_usd(my_price):
 #     """
