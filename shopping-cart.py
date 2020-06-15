@@ -40,7 +40,7 @@ while True:
 
 for selected_id in selected_ids:
     matching_products = [p for p in products if str(p["id"]) == str(selected_id)] #needs to match previous data type
-    matching_product = matching_products[0]
+    # matching_product = matching_products[0]  # DO I NEED THIS??!
     total_price = total_price + matching_product["price"]
     print("SELECTED PRODUCT: " + matching_product["name"] + " " + str(matching_product["price"]))
 print("TOTAL PRICE: " + str(total_price))
@@ -62,3 +62,24 @@ def to_usd(my_price):
 # TODO: write some Python code here to produce the desired output
 
 #print(products)
+
+
+# exception>>>>>>>>>>>>>>>
+# while True:
+#     try:
+#         x = int(input("Please enter a number: "))
+#         break
+#     except ValueError:
+#         print("Oops!  That was no valid number.  Try again...")
+
+# except (RuntimeError, TypeError, NameError):
+#     pass
+
+# import datetime
+
+# today = datetime.date.today()
+# print(str(today)) #> '2017-07-02'
+
+# now = datetime.datetime.now()
+# print(str(now)) #> '2017-07-02 23:43:25.915816'
+# print(now.strftime("%Y-%m-%d")) #> '2017-07-02'
