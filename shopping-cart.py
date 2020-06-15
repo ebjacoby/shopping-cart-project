@@ -3,6 +3,8 @@ import os
 
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 import datetime
 
 load_dotenv()
@@ -74,7 +76,10 @@ print("---------------------------------")
 current_day = datetime.date.today()
 now = datetime.datetime.now()
 current_time = now.strftime("%H:%M:%S")
-print("CHECKOUT AT: ", str(current_day), str(current_time))
+full_time = str(current_day) + " " + str(current_time)
+
+print("CHECKOUT AT: ", full_time)
+
 
 print("---------------------------------")
 print("SELECTED PRODUCTS:")
@@ -84,6 +89,8 @@ for selected_id in selected_ids:
     matching_product = matching_products[0]  # DO I NEED THIS??!
     subtotal_price = subtotal_price + matching_product["price"]
     print("... " + matching_product["name"] + "  (" + str(to_usd(matching_product["price"])) + ")")
+
+all_matching_products = [p for p in products if str(p["id"]) in str(selected_ids)] #new list - dictionaries of selected products
 
 print("---------------------------------")
 
@@ -98,13 +105,39 @@ print("THANKS, SEE YOU AGAIN SOON!")
 print("---------------------------------")
 
 
-# exception>>>>>>>>>>>>>>>
-# while True:
-#     try:
-#         x = int(input("Please enter a number: "))
-#         break
-#     except ValueError:
-#         print("Oops!  That was no valid number.  Try again...")
+#Send e-mail receipt
+customer_email = input("Please enter your e-mail for an electronic copy of your receipt: ")
 
-# except (RuntimeError, TypeError, NameError):
-#     pass
+SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY", "OOPS, please set env var called 'SENDGRID_API_KEY'")
+SENDGRID_TEMPLATE_ID = os.environ.get("SENDGRID_TEMPLATE_ID", "OOPS, please set env var called 'SENDGRID_TEMPLATE_ID'")
+MY_ADDRESS = os.environ.get("MY_EMAIL_ADDRESS", "OOPS, please set env var called 'MY_EMAIL_ADDRESS'")
+
+#print("API KEY:", SENDGRID_API_KEY)
+#print("TEMPLATE ID:", SENDGRID_TEMPLATE_ID)
+#print("EMAIL ADDRESS:", MY_ADDRESS)
+
+template_data = {
+    "total_price_usd": str(to_usd(total_price)),
+    "human_friendly_timestamp": full_time,
+    "products": all_matching_products
+} # or construct this dictionary dynamically based on the results of some other process :-D
+
+client = SendGridAPIClient(SENDGRID_API_KEY)
+print("CLIENT:", type(client))
+
+message = Mail(from_email=MY_ADDRESS, to_emails=customer_email)
+print("MESSAGE:", type(message))
+
+message.template_id = SENDGRID_TEMPLATE_ID
+
+message.dynamic_template_data = template_data
+
+try:
+    response = client.send(message)
+    print("RESPONSE:", type(response))
+    print(response.status_code)
+    print(response.body)
+    print(response.headers)
+
+except Exception as e:
+    print("OOPS", e)
