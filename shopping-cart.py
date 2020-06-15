@@ -71,8 +71,10 @@ print("LUCKY'S FOODS GROCERY")
 print("WWW.LUCKYS-FOODS-GROCERY.COM")
 print("---------------------------------")
 
-current_time = datetime.datetime.now()
-print("CHECKOUT AT: ", str(current_time))
+current_day = datetime.date.today()
+now = datetime.datetime.now()
+current_time = now.strftime("%H:%M:%S")
+print("CHECKOUT AT: ", str(current_day), str(current_time))
 
 print("---------------------------------")
 print("SELECTED PRODUCTS:")
