@@ -110,7 +110,6 @@ print("---------------------------------")
 print("THANKS, SEE YOU AGAIN SOON!")
 print("---------------------------------")
 
-
 #Send e-mail receipt
 customer_email = input("Please enter your e-mail for an electronic copy of your receipt: ")
 
