@@ -27,6 +27,7 @@ From within the virtual environment, install the required packages specified in 
 ```sh
 pip install -r requirements.txt
 ```
+If the requirements.txt does not properly install for whatever reason, each quality must be installed by pip separately... :)
 
 ### API SETUP
 
